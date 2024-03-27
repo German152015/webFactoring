@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario AutoFactoring Security Demo</title>
+    <link rel="stylesheet" href="diseño.css"> <!-- Enlace al archivo CSS -->
+</head>
+<body>
+    <!-- Título principal -->
+    <div class="titulo">
+        <h1>Formulario AutoFactoring Security Demo</h1>
+    </div>
+    
+    <!-- Imagen de Factoring Security de Chile -->
+    <div class="imagen">
+        <img src="factoring_security_logo.jpg" alt="Factoring Security de Chile">
+    </div>
+
+    <!-- Formulario -->
+    <div class="formulario">
+        <form id="formulario" action="/submit-form" method="POST" enctype="multipart/form-data" onsubmit="enviarFormulario(event)">
+
+            <label for="Nombre o razon_social">Nombre o Razón Social:</label>
+            <input type="text" id="razon_social" name="razon_social"><br>
+
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos" name="apellidos" required><br>
+
+            <label for="rut">RUT:</label>
+            <input type="text" id="rut" name="rut" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono"><br>
+           
+            <label for="tipo_documento">Tipo de Documento:</label>
+            <select id="tipo_documento" name="tipo_documento">
+                <option value="Factura">Factura</option>
+                <option value="Cheque">Cheque</option>
+                <option value="Letra">Letra</option>
+                <!-- Agrega más opciones según sea necesario -->
+            </select><br>
+
+            <label for="cargarDocumento">Cargar Documento:</label>
+            <input type="file" id="cargarDocumento" name="cargarDocumento"><br>
+
+            <label for="comentario">Comentario:</label><br>
+            <textarea id="comentario" name="comentario" rows="4" cols="50"></textarea><br>
+
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+    <script src="acciones.js"></script> <!-- Agrega tus scripts JavaScript aquí -->
+
+    <!-- Función para mostrar alertas -->
+    <script>
+        function mostrarAlerta(mensaje) {
+            alert(mensaje);
+        }
+    </script>
+</body>
+</html>
