@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respuesta del Servidor</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Datos recibidos del servidor</h2>
+
+<table>
+    <tr>
+        <th>Campo</th>
+        <th>Valor</th>
+    </tr>
+    <tr>
+        <td>Nombre o Razón Social</td>
+        <td id="razon-social"></td>
+    </tr>
+    <tr>
+        <td>Apellidos</td>
+        <td id="apellidos"></td>
+    </tr>
+    <tr>
+        <td>RUT</td>
+        <td id="rut"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td id="email"></td>
+    </tr>
+    <tr>
+        <td>Teléfono</td>
+        <td id="telefono"></td>
+    </tr>
+    <tr>
+        <td>Tipo de Documento</td>
+        <td id="tipo-documento"></td>
+    </tr>
+    <tr>
+        <td>Cargar Documento</td>
+        <td id="cargar-documento"></td>
+    </tr>
+    <tr>
+        <td>Comentario</td>
+        <td id="comentario"></td>
+    </tr>
+</table>
+
+<script>
+    // Obtener los datos del formulario desde la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const formData = JSON.parse(urlParams.get('data'));
+
+    // Mostrar los datos en la tabla
+    document.getElementById('razon-social').textContent = formData.razonSocial;
+    document.getElementById('apellidos').textContent = formData.apellidos;
+    document.getElementById('rut').textContent = formData.rut;
+    document.getElementById('email').textContent = formData.email;
+    document.getElementById('telefono').textContent = formData.telefono;
+    document.getElementById('tipo-documento').textContent = formData.tipoDocumento;
+    document.getElementById('cargar-documento').textContent = formData.cargarDocumento;
+    document.getElementById('comentario').textContent = formData.comentario;
+</script>
+
+</body>
+</html>
