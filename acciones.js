@@ -1,7 +1,9 @@
 // En acciones.js
+
+
 function enviarFormulario(event) {
     event.preventDefault(); // Evita que se envíe el formulario de forma tradicional
-  
+    
     console.log('Enviando formulario...');
   
     // Obtener los datos del formulario
@@ -15,9 +17,9 @@ function enviarFormulario(event) {
       cargarDocumento: document.getElementById('cargarDocumento').value,
       comentario: document.getElementById('comentario').value
     };
-  
+  //  
     // Realizar la solicitud POST al servidor
-    fetch('/submit-form', {
+    fetch('/formulario', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
