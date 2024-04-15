@@ -1,33 +1,39 @@
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5; /* Color de fondo */
+    background-color: #f5f5f5;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
+/* Estilos del formulario */
 form {
-    background-color: #f0e6ff; /* Color de fondo del formulario */
+    background-color: #f0e6ff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
 }
 
+/* Estilos del título */
 h1 {
     text-align: center;
-    color: #6a0dad; /* Color del título */
+    color: #6a0dad;
+    margin-bottom: 20px; /* Espacio adicional debajo del título */
 }
 
+/* Estilos de las etiquetas */
 label {
     display: block;
     margin-bottom: 10px;
-    color: #4b0082; /* Color de texto */
+    color: #4b0082;
 }
 
+/* Estilos de los campos de entrada, selecciones y área de texto */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -39,17 +45,39 @@ textarea {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box; /* Asegura que el padding y el borde no aumenten el tamaño total */
 }
 
+/* Estilos del botón de envío */
 input[type="submit"] {
-    background-color: #6a0dad; /* Color de fondo del botón */
+    background-color: #6a0dad;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s; /* Transición suave del color de fondo */
 }
 
 input[type="submit"]:hover {
-    background-color: #4b0082; /* Color de fondo del botón al pasar el mouse */
+    background-color: #4b0082;
+}
+
+/* Estilos para mensajes de error */
+.error-message {
+    color: red;
+    display: none; /* Oculta el mensaje de error por defecto */
+}
+
+/* Estilos para el campo razon-social con error */
+#razon_social.invalid-input {
+    border-color: red;
+}
+
+#apellidos.invalid-input {
+    border-color: red;
+}
+
+#rut.invalid-input {
+    border-color: red;
 }

@@ -1,48 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario AutoFactoring Security Demo</title>
-    <link rel="stylesheet" href="diseño.css"> <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="diseño.css">
+    <style>
+        /* Estilos adicionales para el campo razon-social con error */
+        #razon_social.invalid-input:focus {
+            border-color: red;
+        }
+    </style>
 </head>
+
 <body>
-    <!-- Título principal -->
     <div class="titulo">
-        <h1>Formulario AutoFactoring Security Demo</h1>
+        <h1>AutoFactoring Security Demo</h1>
     </div>
-    
-    <!-- Imagen de Factoring Security de Chile -->
+
     <div class="imagen">
         <img src="factoring_security_logo.jpg" alt="Factoring Security de Chile">
     </div>
 
-    <!-- Formulario -->
     <div class="formulario">
-        <form action="/formulario" method="POST">
-
-
-            <label for="Nombre o razon_social">Nombre o Razón Social:</label>
-            <input type="text" id="razon_social" name="razon_social"><br>
+        <form action="/" method="POST">
+            <label for="razon_social">Nombre o Razón Social:</label>
+            <input type="text" id="razon_social" name="razon_social">
+            <label id="nombre-error" class="error-message" style="display:none;">Nombre ingresado incorrecto</label><br>
 
             <label for="apellidos">Apellidos:</label>
-            <input type="text" id="apellidos" name="apellidos" required><br>
+            <input type="text" id="apellidos" name="apellidos">
+            <label id="apellidos-error" class="error-message" style="display:none;">Apellido ingresado
+                incorrecto</label><br>
+
 
             <label for="rut">RUT:</label>
-            <input type="text" id="rut" name="rut" required><br>
+            <input type="text" id="rut" name="rut" required>
+            <label id="rut-error" class="error-message" style="display:none; color: red;">Rut ingresado
+                incorrecto</label><br>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br>
+            <input type="email" id="email" name="email" required>
+            <label id="email-error" class="error-message" style="display:none;">Formato de correo electrónico
+                incorrecto</label><br>
 
             <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono"><br>
-           
+            <input type="tel" id="telefono" name="telefono">
+            <label id="telefono-error" class="error-message" style="display:none;">Formato de teléfono
+                incorrecto</label><br>
+
+
             <label for="tipo_documento">Tipo de Documento:</label>
             <select id="tipo_documento" name="tipo_documento">
                 <option value="Factura">Factura</option>
                 <option value="Cheque">Cheque</option>
                 <option value="Letra">Letra</option>
-                <!-- Agrega más opciones según sea necesario -->
             </select><br>
 
             <label for="cargarDocumento">Cargar Documento:</label>
@@ -55,12 +68,142 @@
         </form>
     </div>
 
-
-    <!-- Función para mostrar alertas -->
     <script>
-        function mostrarAlerta(mensaje) {
-            alert(mensaje);
+        // Agregar una función para validar el nombre y manejar los eventos
+        function validarCampoYManejarEventos(campoId, errorId) {
+            var campoInput = document.getElementById(campoId);
+            var campoError = document.getElementById(errorId);
+    
+            function validarCampo(valor) {
+                return /^[a-zA-Z]{3,20}$/.test(valor);
+            }
+    
+            function actualizarEstadoCampo() {
+                if (validarCampo(campoInput.value)) {
+                    campoError.style.display = 'none';
+                    campoInput.classList.remove('invalid-input');
+                } else {
+                    campoError.style.display = 'block';
+                    campoInput.classList.add('invalid-input');
+                }
+            }
+    
+            campoInput.addEventListener('input', actualizarEstadoCampo);
+    
+            campoInput.addEventListener('focus', actualizarEstadoCampo);
+    
+            campoInput.addEventListener('blur', actualizarEstadoCampo);
         }
+    
+        // Ejecutar la función para validar y manejar eventos en el campo "Razón Social"
+        validarCampoYManejarEventos('razon_social', 'nombre-error');
+    
+        // Ejecutar la función para validar y manejar eventos en el campo "Apellidos"
+        validarCampoYManejarEventos('apellidos', 'apellidos-error');
+    
+        function validarRut(rut) {
+            // Primero, removemos cualquier guión o punto del RUT y convertimos a minúsculas
+            rut = rut.replace(/\./g, '').replace(/\-/g, '').toLowerCase();
+    
+            // Luego, separamos el número del dígito verificador
+            var splitRut = rut.split('');
+            var numero = splitRut.slice(0, -1).join('');
+            var dv = splitRut.pop();
+    
+            // Verificamos si el dígito verificador es 'k' y lo convertimos a 10
+            dv = (dv === 'k') ? 10 : parseInt(dv);
+    
+            // Calculamos el dígito verificador esperado
+            var m = 0, s = 1;
+            for (; numero; numero = Math.floor(numero / 10)) {
+                s = (s + numero % 10 * (9 - m++ % 6)) % 11;
+            }
+            var dvEsperado = s ? String(s - 1) : 'k';
+    
+            // Validamos si el dígito verificador ingresado es igual al esperado
+            return dv == dvEsperado;
+        }
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            var rutInput = document.getElementById('rut');
+            var rutError = document.getElementById('rut-error');
+    
+            rutInput.addEventListener('input', function () {
+                if (validarRut(rutInput.value) || !rutInput.value.trim()) {
+                    rutInput.classList.remove('invalid-input');
+                    rutError.style.display = 'none';
+                } else {
+                    rutInput.classList.add('invalid-input');
+                    rutError.style.display = 'block';
+                }
+            });
+        });
+    
+        // Agregar una función para validar el correo electrónico y manejar los eventos
+        function validarEmailYManejarEventos(campoId, errorId) {
+            var campoInput = document.getElementById(campoId);
+            var campoError = document.getElementById(errorId);
+    
+            function validarEmail(valor) {
+                // Expresión regular para validar el formato de correo electrónico
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
+            }
+    
+            function actualizarEstadoCampo() {
+                if (validarEmail(campoInput.value)) {
+                    campoError.style.display = 'none';
+                    campoInput.classList.remove('invalid-input');
+                } else {
+                    campoError.style.display = 'block';
+                    campoInput.classList.add('invalid-input');
+                }
+            }
+    
+            campoInput.addEventListener('input', actualizarEstadoCampo);
+    
+            campoInput.addEventListener('focus', actualizarEstadoCampo);
+    
+            campoInput.addEventListener('blur', actualizarEstadoCampo);
+        }
+    
+        // Ejecutar la función para validar y manejar eventos en el campo "Email"
+        validarEmailYManejarEventos('email', 'email-error');
+    
+        // Agregar una función para validar el teléfono y manejar los eventos
+        function validarTelefonoYManejarEventos(campoId, errorId) {
+            var campoInput = document.getElementById(campoId);
+            var campoError = document.getElementById(errorId);
+    
+            function validarTelefono(valor) {
+                // Expresión regular para validar el formato de teléfono (9 dígitos)
+                return /^[0-9]{9}$/.test(valor);
+            }
+    
+            function actualizarEstadoCampo() {
+                if (validarTelefono(campoInput.value)) {
+                    campoError.style.display = 'none';
+                    campoInput.classList.remove('invalid-input');
+                } else {
+                    campoError.style.display = 'block';
+                    campoInput.classList.add('invalid-input');
+                }
+            }
+    
+            campoInput.addEventListener('input', actualizarEstadoCampo);
+    
+            campoInput.addEventListener('focus', actualizarEstadoCampo);
+    
+            campoInput.addEventListener('blur', actualizarEstadoCampo);
+        }
+    
+        // Ejecutar la función para validar y manejar eventos en el campo "Teléfono"
+        validarTelefonoYManejarEventos('telefono', 'telefono-error');
     </script>
+    
+
+
+
+
 </body>
+
 </html>
